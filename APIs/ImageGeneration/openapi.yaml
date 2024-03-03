@@ -12,8 +12,8 @@ paths:
     post:
       tags:
         - image
-      summary: Generate an image using the supplied base and new trait
-      description: Generate an image using the supplied base and new trait
+      summary: Generate an image using the supplied base image and new trait
+      description: Generate an image using the supplied base image and new trait
       operationId: imageGenerate
       requestBody:
         description: Generate an image
@@ -121,7 +121,7 @@ components:
           pattern: "^[1-9]\\d{0,31}$"
         newTrait:
           $ref: '#/components/schemas/Trait'
-        parent:
+        baseImage:
           $ref: '#/components/schemas/ImageDescription'
     ImageGenerationResponseOk:
       type: object
