@@ -6,7 +6,7 @@ info:
     email: plksdr@schrodingernft.ai
   license:
     name: MIT
-  version: 1.0.0
+  version: 1.1.0
 paths:
   /image/generate:
     post:
@@ -119,8 +119,10 @@ components:
         seed:
           type: string
           pattern: "^[1-9]\\d{0,31}$"
-        newTrait:
-          $ref: '#/components/schemas/Trait'
+        newTraits:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trait'
         baseImage:
           $ref: '#/components/schemas/ImageDescription'
     ImageGenerationResponseOk:
