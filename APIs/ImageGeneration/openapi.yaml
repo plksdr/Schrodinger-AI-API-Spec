@@ -12,8 +12,8 @@ paths:
     post:
       tags:
         - image
-      summary: Generate an image using the supplied base image and new trait
-      description: Generate an image using the supplied base image and new trait
+      summary: Generate an image using the supplied base image and new attributes
+      description: Generate an image using the supplied base image and new attributes
       operationId: imageGenerate
       requestBody:
         description: Generate an image
@@ -149,10 +149,10 @@ paths:
                 error: 'Failed to create the request'
 components:
   schemas:
-    Trait:
+    Attribute:
       type: object
       properties:
-        name:
+        traitType:
           type: string
           example: Hat
         value:
@@ -164,10 +164,10 @@ components:
         seed:
           type: string
           pattern: "^[1-9]\\d{0,31}$"
-        newTraits:
+        newAttributes:
           type: array
           items:
-            $ref: '#/components/schemas/Trait'
+            $ref: '#/components/schemas/Attribute'
         baseImage:
           $ref: '#/components/schemas/ImageDescription'
           description: Not used for DALLE-3 backend
@@ -208,17 +208,17 @@ components:
       properties:
         image:
           type: string
-        traits:
+        attributes:
           type: array
           xml:
             wrapped: true
           items:
-            $ref: '#/components/schemas/Trait'
+            $ref: '#/components/schemas/Attribute'
         extraData:
           type: string
       example:
-        traits:
-          - name: "Shoes"
+        attributes::
+          - traitType: "Shoes"
             value: "Oxfords"
         image: "data:image/webp;base64,UklGRkAAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAIAAAAAAFZQOCAYAAAAMAEAnQEqAQABAAIANCWkAANwAP77lAAA"
     ImageProcessRequest:
