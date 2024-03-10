@@ -1,0 +1,5 @@
+Flask==2.2.2
+flask_restful==0.3.10
+marshmallow==3.21.1
+gunicorn==21.2.0
+Werkzeug==2.2.3

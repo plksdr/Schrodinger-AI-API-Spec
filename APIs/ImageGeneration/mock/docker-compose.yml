@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  web:
+    image: gldeng/sdr-ai-mock
+    ports:
+      - "9010:9010"
