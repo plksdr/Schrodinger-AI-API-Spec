@@ -6,8 +6,113 @@ info:
     email: plksdr@schrodingernft.ai
   license:
     name: MIT
-  version: 1.3.0
+  version: 1.4.0
 paths:
+  /image/generations/{requestId}:
+    get:
+      tags:
+        - image
+      summary: Get the image generation by ID. This is the same as /image/query except it's a get method.
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          description: The unique identifier for the request. Must be supplied by the client.
+          schema:
+            type: string
+            minLength: 10
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageQueryResponseOk'
+        '202':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'The result is not ready.'
+        '404':
+          description: Request Id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'Request not found'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'Failed to query the result'
+    post:
+      tags:
+        - image
+      summary: Create an image generation. This is the same as /image/generate except the requestId is supplied by the caller.
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          description: The unique identifier for the request. Must be supplied by the client.
+          schema:
+            type: string
+            minLength: 10
+      requestBody:
+        description: Input for an image generation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageGenerationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseOk'
+              example:
+                requestId: "b90f0dff-6077-4b6e-b390-ffdd0763110c"
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'Invalid input'
+        '409':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'Duplicate request'
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'Invalid input'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageGenerationResponseNotOk'
+              example:
+                error: 'Failed to create the request'
+
   /image/generate:
     post:
       tags:
